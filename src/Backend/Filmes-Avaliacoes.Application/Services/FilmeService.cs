@@ -42,8 +42,7 @@ namespace Filmes_Avaliacoes.Application.Services
 
 		}
 
-		// Implementando os métodos
-		public async Task<Response<List<Filme>>> ListarAutores()
+		public async Task<Response<List<Filme>>> ListarFilmes()
 		{
 			Response<List<Filme>> resposta = new Response<List<Filme>>();
 

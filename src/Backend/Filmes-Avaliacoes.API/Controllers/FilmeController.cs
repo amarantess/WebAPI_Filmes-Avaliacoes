@@ -18,10 +18,10 @@ namespace Filmes_Avaliacoes.API.Controllers
 
 
 		[HttpGet("ListarFilmes")]
-		public async Task<ActionResult<Response<List<Filme>>>> ListarAutor()
+		public async Task<ActionResult<Response<List<Filme>>>> ListarFilmes()
 		{
-			var filme = await _filmeInterface.ListarAutores();
-			return Created(string.Empty ,filme);
+			var filme = await _filmeInterface.ListarFilmes();
+			return Ok(filme);
 		}
 
 
