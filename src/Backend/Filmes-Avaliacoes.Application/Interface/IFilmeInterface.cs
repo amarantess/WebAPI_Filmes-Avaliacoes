@@ -12,5 +12,7 @@ namespace Filmes_Avaliacoes.Application.Interface
 		Task<Response<Filme>> CadastrarFilme(FilmeDto filmeDto);
 
 		Task<Response<Filme>> EditarFilme(FilmeEdicaoDto filmeEdicaoDto);
+
+		Task<Response<List<Filme>>> ExcluirFilme(int idFilme);
 	}
 }
