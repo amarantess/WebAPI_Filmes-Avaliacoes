@@ -48,5 +48,13 @@ namespace Filmes_Avaliacoes.API.Controllers
 			var filme = await _filmeInterface.EditarFilme(filmeEdicaoDto);
 			return Ok(filme);
 		}
+
+
+		[HttpDelete("ExcluirFilme/{idFilme}")]
+		public async Task<ActionResult<Response<List<Filme>>>> ExcluirFilme(int idFilme)
+		{
+			var filme = await _filmeInterface.ExcluirFilme(idFilme);
+			return Ok(filme);
+		}
     }
 }

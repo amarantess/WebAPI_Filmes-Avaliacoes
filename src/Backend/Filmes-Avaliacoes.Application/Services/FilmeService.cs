@@ -110,6 +110,35 @@ namespace Filmes_Avaliacoes.Application.Services
 			}
 		}
 
+		public async Task<Response<List<Filme>>> ExcluirFilme(int idFilme)
+		{
+			Response<List<Filme>> resposta = new Response<List<Filme>>();
+
+			try
+			{
+				var filme = await _context.Filmes.FirstOrDefaultAsync(filmeBanco => filmeBanco.Id == idFilme);
+				if (filme == null)
+				{
+					resposta.Mensagem = "Nenhum registro localizado";
+					return resposta;
+				}
+
+				_context.Remove(filme);
+				await _context.SaveChangesAsync();
+
+				resposta.Dados = await _context.Filmes.ToListAsync();
+				resposta.Mensagem = "Filme excluido com sucesso.";
+				return resposta;
+
+			}
+			catch(Exception ex)
+			{
+				resposta.Mensagem= ex.Message;
+				resposta.Status = false;
+				return resposta;
+			}
+		}
+
 		public async Task<Response<List<Filme>>> ListarFilmes()
 		{
 			Response<List<Filme>> resposta = new Response<List<Filme>>();
