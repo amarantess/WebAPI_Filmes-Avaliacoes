@@ -23,5 +23,15 @@ namespace Filmes_Avaliacoes.API.Controllers
 			var filme = await _filmeInterface.ListarAutores();
 			return Created(string.Empty ,filme);
 		}
+
+
+		[HttpGet("BuscarFilmePorId/{idFilme}")]
+		public async Task<ActionResult<Response<Filme>>> BuscarFilmePorId(int idFilme)
+		{
+			var filme = await _filmeInterface.BuscarFilmePorId(idFilme);
+			return Ok(filme);
+		}
+
+
     }
 }
