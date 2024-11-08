@@ -1,4 +1,7 @@
-﻿using Filmes_Avaliacoes.Application.Interface;
+﻿using AutoMapper;
+using Filmes_Avaliacoes.Application.DTOs;
+using Filmes_Avaliacoes.Application.Interface;
+using Filmes_Avaliacoes.Application.Mappings;
 using Filmes_Avaliacoes.Domain.Entities;
 using Filmes_Avaliacoes.Infrastructure.DataAcess;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +37,35 @@ namespace Filmes_Avaliacoes.Application.Services
                 return resposta;
             }
             catch (Exception ex)
+            {
+                resposta.Mensagem = ex.Message;
+                resposta.Status = false;
+                return resposta;
+            }
+
+		}
+
+		public async Task<Response<Filme>> CadastrarFilme(FilmeDto filmeDto)
+		{
+            Response<Filme> resposta = new Response<Filme>();
+
+            try
+            {
+				var autoMapper = new MapperConfiguration(options =>
+				{
+					options.AddProfile(new AutoMapping());
+				}).CreateMapper();
+
+                var filme = autoMapper.Map<Filme>(filmeDto);
+
+                _context.Add(filme);
+                await _context.SaveChangesAsync();
+
+                resposta.Dados = filme;
+                resposta.Mensagem = "Filme cadastrado com sucesso!";
+                return resposta;
+			}
+            catch(Exception ex)
             {
                 resposta.Mensagem = ex.Message;
                 resposta.Status = false;

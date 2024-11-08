@@ -1,4 +1,5 @@
-﻿using Filmes_Avaliacoes.Application.Interface;
+﻿using Filmes_Avaliacoes.Application.DTOs;
+using Filmes_Avaliacoes.Application.Interface;
 using Filmes_Avaliacoes.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +31,14 @@ namespace Filmes_Avaliacoes.API.Controllers
 		{
 			var filme = await _filmeInterface.BuscarFilmePorId(idFilme);
 			return Ok(filme);
+		}
+
+
+		[HttpPost("CadastrarFilme")]
+		public async Task<ActionResult<Response<Filme>>> CadastrarFilme(FilmeDto filmeDto)
+		{
+			var filme = await _filmeInterface.CadastrarFilme(filmeDto);
+			return Created(string.Empty,filme);
 		}
 
 
