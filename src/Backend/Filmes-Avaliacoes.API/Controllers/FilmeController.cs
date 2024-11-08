@@ -42,5 +42,11 @@ namespace Filmes_Avaliacoes.API.Controllers
 		}
 
 
+		[HttpPut("EditarFilme")]
+		public async Task<ActionResult<Response<Filme>>> EditarFilme(FilmeEdicaoDto filmeEdicaoDto)
+		{
+			var filme = await _filmeInterface.EditarFilme(filmeEdicaoDto);
+			return Ok(filme);
+		}
     }
 }

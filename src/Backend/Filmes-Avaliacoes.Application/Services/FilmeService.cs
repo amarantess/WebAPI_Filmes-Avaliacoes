@@ -74,6 +74,42 @@ namespace Filmes_Avaliacoes.Application.Services
 
 		}
 
+		public async Task<Response<Filme>> EditarFilme(FilmeEdicaoDto filmeEdicaoDto)
+		{
+			Response<Filme> resposta = new Response<Filme>();
+
+			try
+			{
+				var filme = await _context.Filmes.FirstOrDefaultAsync(filmeBanco => filmeBanco.Id == filmeEdicaoDto.Id);
+				if (filme == null)
+				{
+					resposta.Mensagem = "Nenhum registro localizado";
+					return resposta;
+				}
+
+				var autoMapper = new MapperConfiguration(options =>
+				{
+					options.AddProfile(new AutoMapping());
+				}).CreateMapper();
+
+				// Mapeia as mudanças do DTO para a instância existente
+				autoMapper.Map(filmeEdicaoDto, filme);
+
+				_context.Update(filme);
+				await _context.SaveChangesAsync();
+
+				resposta.Dados = filme;
+				resposta.Mensagem = "Filme editado com sucesso.";
+				return resposta;
+			}
+			catch (Exception ex)
+			{
+				resposta.Mensagem = ex.Message;
+				resposta.Status = false;
+				return resposta;
+			}
+		}
+
 		public async Task<Response<List<Filme>>> ListarFilmes()
 		{
 			Response<List<Filme>> resposta = new Response<List<Filme>>();

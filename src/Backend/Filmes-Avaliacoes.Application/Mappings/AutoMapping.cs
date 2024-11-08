@@ -16,13 +16,23 @@ namespace Filmes_Avaliacoes.Application.Mappings
         public AutoMapping()
         {
             Request();
-        }
+            RequestEdicao();
+
+		}
 
         private void Request()
         {
             CreateMap<FilmeDto, Filme>()
                 .ForMember(dest => dest.DataLancamento, opt => opt.MapFrom(src =>
 		            DateTime.ParseExact(src.DataLancamento, "dd/MM/yyyy", CultureInfo.InvariantCulture)));
+		}
+
+        private void RequestEdicao()
+        {
+            CreateMap<FilmeEdicaoDto, Filme>()
+                .ForMember(dest => dest.DataLancamento, opt => opt.MapFrom(src =>
+					DateTime.ParseExact(src.DataLancamento, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
 		}
     }
 }
