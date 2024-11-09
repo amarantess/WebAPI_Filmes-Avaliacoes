@@ -22,26 +22,17 @@ namespace Filmes_Avaliacoes.Application.Services
 		{
 			Response<Filme> resposta = new Response<Filme>();
 
-            try
-            {
-                var filme = await _context.Filmes.FirstOrDefaultAsync(filmeBanco => filmeBanco.Id == idFilme);
+			var filme = await _context.Filmes.FirstOrDefaultAsync(filmeBanco => filmeBanco.Id == idFilme);
 
-                if (filme == null)
-                {
-                    resposta.Mensagem = "Nenhum registro encontrado";
-                    return resposta;
-                }
+			if (filme == null)
+			{
+				resposta.Mensagem = "Nenhum registro encontrado";
+				return resposta;
+			}
 
-                resposta.Dados = filme;
-                resposta.Mensagem = "Filme localizado";
-                return resposta;
-            }
-            catch (Exception ex)
-            {
-                resposta.Mensagem = ex.Message;
-                resposta.Status = false;
-                return resposta;
-            }
+			resposta.Dados = filme;
+			resposta.Mensagem = "Filme localizado";
+			return resposta;
 
 		}
 
@@ -49,28 +40,19 @@ namespace Filmes_Avaliacoes.Application.Services
 		{
             Response<Filme> resposta = new Response<Filme>();
 
-            try
-            {
-				var autoMapper = new MapperConfiguration(options =>
-				{
-					options.AddProfile(new AutoMapping());
-				}).CreateMapper();
+			var autoMapper = new MapperConfiguration(options =>
+			{
+				options.AddProfile(new AutoMapping());
+			}).CreateMapper();
 
-                var filme = autoMapper.Map<Filme>(filmeDto);
+			var filme = autoMapper.Map<Filme>(filmeDto);
 
-                _context.Add(filme);
-                await _context.SaveChangesAsync();
+			_context.Add(filme);
+			await _context.SaveChangesAsync();
 
-                resposta.Dados = filme;
-                resposta.Mensagem = "Filme cadastrado com sucesso!";
-                return resposta;
-			}
-            catch(Exception ex)
-            {
-                resposta.Mensagem = ex.Message;
-                resposta.Status = false;
-                return resposta;
-            }
+			resposta.Dados = filme;
+			resposta.Mensagem = "Filme cadastrado com sucesso!";
+			return resposta;
 
 		}
 
@@ -78,85 +60,57 @@ namespace Filmes_Avaliacoes.Application.Services
 		{
 			Response<Filme> resposta = new Response<Filme>();
 
-			try
+			var filme = await _context.Filmes.FirstOrDefaultAsync(filmeBanco => filmeBanco.Id == filmeEdicaoDto.Id);
+			if (filme == null)
 			{
-				var filme = await _context.Filmes.FirstOrDefaultAsync(filmeBanco => filmeBanco.Id == filmeEdicaoDto.Id);
-				if (filme == null)
-				{
-					resposta.Mensagem = "Nenhum registro localizado";
-					return resposta;
-				}
-
-				var autoMapper = new MapperConfiguration(options =>
-				{
-					options.AddProfile(new AutoMapping());
-				}).CreateMapper();
-
-				// Mapeia as mudanças do DTO para a instância existente
-				autoMapper.Map(filmeEdicaoDto, filme);
-
-				_context.Update(filme);
-				await _context.SaveChangesAsync();
-
-				resposta.Dados = filme;
-				resposta.Mensagem = "Filme editado com sucesso.";
+				resposta.Mensagem = "Nenhum registro localizado";
 				return resposta;
 			}
-			catch (Exception ex)
+
+			var autoMapper = new MapperConfiguration(options =>
 			{
-				resposta.Mensagem = ex.Message;
-				resposta.Status = false;
-				return resposta;
-			}
+				options.AddProfile(new AutoMapping());
+			}).CreateMapper();
+
+			// Mapeia as mudanças do DTO para a instância existente
+			autoMapper.Map(filmeEdicaoDto, filme);
+
+			_context.Update(filme);
+			await _context.SaveChangesAsync();
+
+			resposta.Dados = filme;
+			resposta.Mensagem = "Filme editado com sucesso.";
+			return resposta;
 		}
 
 		public async Task<Response<List<Filme>>> ExcluirFilme(int idFilme)
 		{
 			Response<List<Filme>> resposta = new Response<List<Filme>>();
 
-			try
+			var filme = await _context.Filmes.FirstOrDefaultAsync(filmeBanco => filmeBanco.Id == idFilme);
+			if (filme == null)
 			{
-				var filme = await _context.Filmes.FirstOrDefaultAsync(filmeBanco => filmeBanco.Id == idFilme);
-				if (filme == null)
-				{
-					resposta.Mensagem = "Nenhum registro localizado";
-					return resposta;
-				}
-
-				_context.Remove(filme);
-				await _context.SaveChangesAsync();
-
-				resposta.Dados = await _context.Filmes.ToListAsync();
-				resposta.Mensagem = "Filme excluido com sucesso.";
-				return resposta;
-
-			}
-			catch(Exception ex)
-			{
-				resposta.Mensagem= ex.Message;
-				resposta.Status = false;
+				resposta.Mensagem = "Nenhum registro localizado";
 				return resposta;
 			}
+
+			_context.Remove(filme);
+			await _context.SaveChangesAsync();
+
+			resposta.Dados = await _context.Filmes.ToListAsync();
+			resposta.Mensagem = "Filme excluido com sucesso.";
+			return resposta;
 		}
 
 		public async Task<Response<List<Filme>>> ListarFilmes()
 		{
 			Response<List<Filme>> resposta = new Response<List<Filme>>();
 
-            try
-            {
-                var filmes = await _context.Filmes.ToListAsync();
+			var filmes = await _context.Filmes.ToListAsync();
 
-                resposta.Dados = filmes;
-                resposta.Mensagem = "Todos os filmes foram encontrados";
-                return resposta;
-            }
-            catch (Exception ex)
-            {
-                resposta.Mensagem = ex.Message;
-                resposta.Status = false;
-                return resposta;
-            }
+			resposta.Dados = filmes;
+			resposta.Mensagem = "Todos os filmes foram encontrados";
+			return resposta;
 
 		}
 

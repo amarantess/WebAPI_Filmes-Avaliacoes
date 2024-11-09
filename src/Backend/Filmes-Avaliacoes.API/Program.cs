@@ -2,6 +2,7 @@ using Filmes_Avaliacoes.Application.Services;
 using Filmes_Avaliacoes.Application.Interface;
 using Filmes_Avaliacoes.Infrastructure.DataAcess;
 using Microsoft.EntityFrameworkCore;
+using Filmes_Avaliacoes.Application.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +31,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Registro do middleware personalizado de tratamento de exceções
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseAuthorization();
 
