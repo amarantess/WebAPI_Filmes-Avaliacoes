@@ -17,7 +17,7 @@ namespace Filmes_Avaliacoes.Application.Mappings
         {
             Request();
             RequestEdicao();
-
+            RequestAvaliacao();
 		}
 
         private void Request()
@@ -34,5 +34,11 @@ namespace Filmes_Avaliacoes.Application.Mappings
 					DateTime.ParseExact(src.DataLancamento, "dd/MM/yyyy", CultureInfo.InvariantCulture)))
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
 		}
+
+        private void RequestAvaliacao()
+        {
+            CreateMap<AvaliacaoDto, Avaliacao>();
+        }
+
     }
 }
