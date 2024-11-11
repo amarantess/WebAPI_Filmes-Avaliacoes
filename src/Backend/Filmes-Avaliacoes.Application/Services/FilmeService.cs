@@ -113,7 +113,5 @@ namespace Filmes_Avaliacoes.Application.Services
 			return resposta;
 
 		}
-
-
 	}
 }

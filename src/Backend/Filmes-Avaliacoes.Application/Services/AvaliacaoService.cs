@@ -99,6 +99,22 @@ namespace Filmes_Avaliacoes.Application.Services
 			return resposta;
 		}
 
+		public async Task<Response<Avaliacao>> ExcluirAvaliacao(int idAvaliacao)
+		{
+			Response<Avaliacao> resposta = new Response<Avaliacao>();
 
+			var avaliacao = await _context.Avaliacoes.FirstOrDefaultAsync(avaliacaoBanco => avaliacaoBanco.Id == idAvaliacao);
+			if (avaliacao == null)
+			{
+				resposta.Mensagem = "Nenhum registro localizado";
+				return resposta;
+			}
+
+			_context.Remove(avaliacao);
+			await _context.SaveChangesAsync();
+
+			resposta.Mensagem = "Avaliação excluida com sucesso.";
+			return resposta;
+		}
 	}
 }
