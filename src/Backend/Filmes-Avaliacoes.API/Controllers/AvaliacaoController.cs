@@ -21,7 +21,7 @@ namespace Filmes_Avaliacoes.API.Controllers
 		public async Task<ActionResult<Response<List<Avaliacao>>>> CadastrarAvaliacao(AvaliacaoDto avaliacaoDto)
 		{
 			var avaliacao = await _avaliacaoInterface.CadastrarAvaliacao(avaliacaoDto);
-			return Created(string.Empty ,avaliacao);
+			return Created(string.Empty, avaliacao);
 		}
 
 
@@ -31,5 +31,13 @@ namespace Filmes_Avaliacoes.API.Controllers
 			var avaliacao = await _avaliacaoInterface.AvaliacaoFilme(idFilme);
 			return Ok(avaliacao);
 		}
+
+		[HttpPut("EditarAvaliacao")]
+		public async Task<ActionResult<Response<Avaliacao>>> EditarAvaliacao(AvaliacaoEdicaoDto avaliacaoEdicaoDto)
+		{
+			var avaliacao = await _avaliacaoInterface.EditarAvaliacao(avaliacaoEdicaoDto);
+			return Ok(avaliacao);
+		}
+
 	}
 }
