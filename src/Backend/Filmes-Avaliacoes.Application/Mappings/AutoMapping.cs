@@ -18,6 +18,7 @@ namespace Filmes_Avaliacoes.Application.Mappings
             Request();
             RequestEdicao();
             RequestAvaliacao();
+            EdicaoAvaliacao();
 		}
 
         private void Request()
@@ -38,6 +39,12 @@ namespace Filmes_Avaliacoes.Application.Mappings
         private void RequestAvaliacao()
         {
             CreateMap<AvaliacaoDto, Avaliacao>();
+        }
+
+        private void EdicaoAvaliacao()
+        {
+            CreateMap<AvaliacaoEdicaoDto, Avaliacao>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
         }
 
     }

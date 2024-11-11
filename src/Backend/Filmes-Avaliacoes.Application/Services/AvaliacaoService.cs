@@ -72,5 +72,33 @@ namespace Filmes_Avaliacoes.Application.Services
 			resposta.Mensagem = "Avaliação criada com sucesso.";
 			return resposta;
 		}
+
+		public async Task<Response<Avaliacao>> EditarAvaliacao(AvaliacaoEdicaoDto avaliacaoEdicaoDto)
+		{
+			Response<Avaliacao> resposta = new Response<Avaliacao>();
+
+			var avaliacao = await _context.Avaliacoes.Include(f => f.Filme).FirstOrDefaultAsync(avaliacaoBanco => avaliacaoBanco.Id == avaliacaoEdicaoDto.Id);
+			if (avaliacao == null)
+			{
+				resposta.Mensagem = "Nenhum registro localizado.";
+				return resposta;
+			}
+
+			var autoMapper = new MapperConfiguration(options =>
+			{
+				options.AddProfile(new AutoMapping());
+			}).CreateMapper();
+
+			autoMapper.Map(avaliacaoEdicaoDto, avaliacao);
+
+			_context.Update(avaliacao);
+			await _context.SaveChangesAsync();
+
+			resposta.Dados = avaliacao;
+			resposta.Mensagem = "Avaliação editada com sucesso.";
+			return resposta;
+		}
+
+
 	}
 }
