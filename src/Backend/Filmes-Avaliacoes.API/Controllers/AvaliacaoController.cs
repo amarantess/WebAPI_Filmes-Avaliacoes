@@ -32,6 +32,7 @@ namespace Filmes_Avaliacoes.API.Controllers
 			return Ok(avaliacao);
 		}
 
+
 		[HttpPut("EditarAvaliacao")]
 		public async Task<ActionResult<Response<Avaliacao>>> EditarAvaliacao(AvaliacaoEdicaoDto avaliacaoEdicaoDto)
 		{
@@ -39,5 +40,12 @@ namespace Filmes_Avaliacoes.API.Controllers
 			return Ok(avaliacao);
 		}
 
+
+		[HttpDelete("ExcluirAvaliacao/{idAvaliacao}")]
+		public async Task<ActionResult<Response<Avaliacao>>> ExcluirAvaliacao(int idAvaliacao)
+		{
+			var avaliacao = await _avaliacaoInterface.ExcluirAvaliacao(idAvaliacao);
+			return Ok(avaliacao);
+		}
 	}
 }
