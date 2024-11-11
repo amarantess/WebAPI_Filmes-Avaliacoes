@@ -6,6 +6,7 @@ namespace Filmes_Avaliacoes.Application.Interface
 	public interface IAvaliacaoInterface
 	{
 		Task<Response<List<Avaliacao>>> CadastrarAvaliacao(AvaliacaoDto avaliacaoDto);
+		Task<Response<List<Avaliacao>>> AvaliacaoFilme(int idFilme);
 
 	}
 }

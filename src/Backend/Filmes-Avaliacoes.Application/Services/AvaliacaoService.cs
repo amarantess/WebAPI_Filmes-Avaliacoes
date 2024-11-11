@@ -18,6 +18,21 @@ namespace Filmes_Avaliacoes.Application.Services
             _context = context;
         }
 
+		public async Task<Response<List<Avaliacao>>> AvaliacaoFilme(int idFilme)
+		{
+			Response<List<Avaliacao>> resposta = new Response<List<Avaliacao>>();
+
+			var filme = await _context.Avaliacoes.Include(f => f.Filme).FirstOrDefaultAsync(filmeBanco => filmeBanco.FilmeId == idFilme);
+			if (filme == null)
+			{
+				resposta.Mensagem = "Registro não localizado";
+				return resposta;
+			}
+
+			resposta.Dados = await _context.Avaliacoes.Include(f => f.Filme).Where(a => a.FilmeId == idFilme).ToListAsync();
+			return resposta;
+		}
+
 		public async Task<Response<List<Avaliacao>>> CadastrarAvaliacao(AvaliacaoDto avaliacaoDto)
 		{
 			Response<List<Avaliacao>> resposta = new Response<List<Avaliacao>>();

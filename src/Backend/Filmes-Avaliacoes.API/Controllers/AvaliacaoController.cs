@@ -24,5 +24,12 @@ namespace Filmes_Avaliacoes.API.Controllers
 			return Created(string.Empty ,avaliacao);
 		}
 
+
+		[HttpGet("AvaliacaoFilme/{idFilme}")]
+		public async Task<ActionResult<Response<List<Avaliacao>>>> AvaliacaoFilme(int idFilme)
+		{
+			var avaliacao = await _avaliacaoInterface.AvaliacaoFilme(idFilme);
+			return Ok(avaliacao);
+		}
 	}
 }
