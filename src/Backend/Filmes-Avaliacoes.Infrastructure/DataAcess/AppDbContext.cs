@@ -11,5 +11,6 @@ namespace Filmes_Avaliacoes.Infrastructure.DataAcess
         }
 
         public DbSet<Filme> Filmes { get; set; }
+        public DbSet<Avaliacao> Avaliacoes { get; set; }
     }
 }

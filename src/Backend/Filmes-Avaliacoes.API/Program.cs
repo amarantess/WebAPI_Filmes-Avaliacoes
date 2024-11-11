@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 
 // Injeção de dependência
 builder.Services.AddScoped<IFilmeInterface, FilmeService>();
+builder.Services.AddScoped<IAvaliacaoInterface, AvaliacaoService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
